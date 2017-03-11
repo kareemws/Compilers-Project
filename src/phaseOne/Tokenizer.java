@@ -51,7 +51,6 @@ abstract public class Tokenizer {
 			}
 		}
 		sortResult(result);
-		System.out.println(source);
 		return result;
 	}
 	
@@ -63,8 +62,8 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<COMMENT1>", "//.*"));
 		//Literals
 		tokens.add(new RegexPair("<STRING_LITERAL>", "\"(.|[\r\n])*\""));
-		tokens.add(new RegexPair("<INTEGRAL_LITERAL>", "\\d+"));
 		tokens.add(new RegexPair("<FLOAT_LITERAL>", "\\d+\\.\\d+"));
+		tokens.add(new RegexPair("<INTEGRAL_LITERAL>", "\\d+"));
 		tokens.add(new RegexPair("<A_CHAR>", "'.*'"));
 		//Symbols
 		tokens.add(new RegexPair("<SQUOTE>", "'"));
