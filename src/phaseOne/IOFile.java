@@ -20,10 +20,8 @@ public class IOFile {
 		       result += line + "\n";
 		    }
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
@@ -33,12 +31,10 @@ public class IOFile {
 		try {
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			for(Token token: tokens) {
-				//System.out.println(token.getLabel() + ": " + token.getValue());
 				writer.println(token.getLabel() + ": " + token.getValue());
 			}
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
