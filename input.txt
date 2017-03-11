@@ -1,0 +1,13 @@
+public class classid{
+	public static void main(Strnig [] argsid) {
+		int intvalue = 10+5;
+		int double = 5;
+		String sid = "fadsfkasdfewj94u3904n.dvxvmcx645";
+		//asdfdsafdsafasd
+		/*sdfdsaf
+		sdafdsafa
+		fasdfsdfasdf
+		sdafasdfasd
+		*/
+	}
+}
