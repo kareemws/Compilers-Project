@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 public class Demo {
 	
 	public static void main(String[] args) {	
-		IOFile.writeOnFile(Tokenizer.tokenize(IOFile.readFile()));
+		String src = IOFile.readFile();
+		ArrayList<Token> result = Tokenizer.tokenize(src) ;
+		IOFile.writeOnFile(result);
 	}
 }

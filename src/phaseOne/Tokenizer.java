@@ -60,7 +60,7 @@ abstract public class Tokenizer {
 		tokens = new ArrayList<RegexPair>();
 		//Comments
 		tokens.add(new RegexPair("<COMMENT2>", "/\\*([^*]|[\r\n]|(\\*+([^*/]|[\r\n])))*\\*+/"));
-		tokens.add(new RegexPair("COMMENT1", "//.*"));
+		tokens.add(new RegexPair("<COMMENT1>", "//.*"));
 		//Literals
 		tokens.add(new RegexPair("<STRING_LITERAL>", "\"(.|[\r\n])*\""));
 		tokens.add(new RegexPair("<INTEGRAL_LITERAL>", "\\d+"));
@@ -114,7 +114,7 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<FLOAT>", "(?<!\\w)float(?!\\w)"));
 		tokens.add(new RegexPair("<CHARACTER>", "(?<!\\w)char(?!\\w)"));
 		tokens.add(new RegexPair("<BOOLEAN>", "(?<!\\w)boolean(?!\\w)"));
-		tokens.add(new RegexPair("<ID>", "[^ ]+"));
+		tokens.add(new RegexPair("<ID>", "[^\\s+]+"));
 	}
 
 	private static void sortResult(ArrayList<Token> result)

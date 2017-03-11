@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public class IOFile {
 	public static String readFile() {
-		String resault = "";
+		String result = "";
 		try {
 			BufferedReader buffer = new BufferedReader(new FileReader(new File("input.txt")));
 			String line;
 		    while ((line = buffer.readLine()) != null) {
-		       resault += line + "\n";
+		       result += line + "\n";
 		    }
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -26,13 +26,14 @@ public class IOFile {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return resault;
+		return result;
 	}
 	
 	public static void writeOnFile(ArrayList<Token> tokens) {
 		try {
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			for(Token token: tokens) {
+				System.out.println(token.getLabel() + ": " + token.getValue());
 				writer.println(token.getLabel() + ": " + token.getValue());
 			}
 			writer.close();
