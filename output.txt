@@ -32,16 +32,21 @@
 <STRING>: String
 <ID>: sid
 <EQUAL>: =
-<STRING_LITERAL>: "fadsfkasdfewj94u3904n.dvxvmcx645";
-		                 
-		                                                       
-		String sid = "fadsfkasdfewj94u3904n.dvxvmcx645"
+<STRING_LITERAL>: "fadsfkasdfewj94u3904n.dvxvmcx645"
+<SEMICOLON>: ;
+<EOL>: \n
 <COMMENT1>: //asdfdsafdsafasd
+<EOL>: \n
 <COMMENT2>: /*sdfdsaf
 		sdafdsafa
 		fasdfsdfasdf
 		sdafasdfasd
 		*/
+<EOL>: \n
+<STRING>: String
+<ID>: sid
+<EQUAL>: =
+<STRING_LITERAL>: "fadsfkasdfewj94\"u3904n.dvxvmcx645"
 <SEMICOLON>: ;
 <EOL>: \n
 <RIGHT_CURLY_B>: }

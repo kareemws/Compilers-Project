@@ -61,7 +61,7 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<COMMENT2>", "/\\*([^*]|[\r\n]|(\\*+([^*/]|[\r\n])))*\\*+/"));
 		tokens.add(new RegexPair("<COMMENT1>", "//.*"));
 		//Literals
-		tokens.add(new RegexPair("<STRING_LITERAL>", "\"(.|[\r\n])*\""));
+		tokens.add(new RegexPair("<STRING_LITERAL>", "\"((\\\\\"|[^\"])|[\r\n])*\""));
 		tokens.add(new RegexPair("<FLOAT_LITERAL>", "\\d+\\.\\d+"));
 		tokens.add(new RegexPair("<INTEGRAL_LITERAL>", "\\d+"));
 		tokens.add(new RegexPair("<A_CHAR>", "'.*'"));

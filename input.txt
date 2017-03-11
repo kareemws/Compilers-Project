@@ -9,6 +9,6 @@ public class classid{
 		fasdfsdfasdf
 		sdafasdfasd
 		*/
-		String sid = "fadsfkasdfewj94u3904n.dvxvmcx645";
+		String sid = "fadsfkasdfewj94\"u3904n.dvxvmcx645";
 	}
 }
