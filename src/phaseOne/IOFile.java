@@ -33,7 +33,7 @@ public class IOFile {
 		try {
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			for(Token token: tokens) {
-				System.out.println(token.getLabel() + ": " + token.getValue());
+				//System.out.println(token.getLabel() + ": " + token.getValue());
 				writer.println(token.getLabel() + ": " + token.getValue());
 			}
 			writer.close();

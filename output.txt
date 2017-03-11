@@ -35,7 +35,7 @@
 <STRING_LITERAL>: "fadsfkasdfewj94u3904n.dvxvmcx645"
 <SEMICOLON>: ;
 <EOL>: \n
-COMMENT1: //asdfdsafdsafasd
+<COMMENT1>: //asdfdsafdsafasd
 <EOL>: \n
 <COMMENT2>: /*sdfdsaf
 		sdafdsafa
