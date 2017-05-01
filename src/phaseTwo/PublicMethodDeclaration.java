@@ -30,7 +30,7 @@ public class PublicMethodDeclaration {
 		this.identifiers.add(identifier2) ;
 		this.varDeclaration = VarDeclaration ;
 		this.statement = statement ;
-		this.expression = expression;
+		this.expression = expression ;
 	}
 	
 	public PrivateMethodDeclaration(Type type, Identifier identifier, VarDeclaration varDeclarations, ArrayList<Statement> statements, Expression expression, ArrayList<Type> types ,ArrayList<Identifier> identifiers ){

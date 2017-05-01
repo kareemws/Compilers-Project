@@ -1,5 +1,7 @@
 package phaseTwo;
 
+import java.util.ArrayList;
+
 public class Goal {
 	MainClass mainClass;
 	ArrayList<ClassDeclaration> classDeclaration;
@@ -18,5 +20,6 @@ public class Goal {
 		for(int i = 0; i < classDeclaration.size(); i ++) {
 			value.append(classDeclaration.get(i).getValue());
 		}
+		return value.toString();
 	}
 }
