@@ -9,7 +9,7 @@ public class ClassDeclaration {
 	private ArrayList<VarDeclaration> varDeclaration;
 	private ArrayList<MethodDeclaration> methodDeclaration;
 	
-	public CLassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
 			ArrayList<MethodDeclaration> methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.secondIdentifier = secondIdentifier;
@@ -17,7 +17,7 @@ public class ClassDeclaration {
 		this.methodDeclaration = methodDeclaration;
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
 			MethodDeclaration methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.secondIdentifier = secondIdentifier;
@@ -26,7 +26,7 @@ public class ClassDeclaration {
 		this.methodDeclaration.add(methodDeclaration);
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
 			ArrayList<MethodDeclaration> methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.secondIdentifier = secondIdentifier;
@@ -35,7 +35,7 @@ public class ClassDeclaration {
 		this.methodDeclaration = methodDeclaration;
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
 			MethodDeclaration methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.secondIdentifier = secondIdentifier;
@@ -45,14 +45,14 @@ public class ClassDeclaration {
 		this.methodDeclaration.add(methodDeclaration);
 	}
 
-	public CLassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
 			ArrayList<MethodDeclaration> methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.varDeclaration = varDeclaration;
 		this.methodDeclaration = methodDeclaration;
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
 			MethodDeclaration methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.varDeclaration = varDeclaration;
@@ -60,7 +60,7 @@ public class ClassDeclaration {
 		this.methodDeclaration.add(methodDeclaration);
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
 			ArrayList<MethodDeclaration> methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.varDeclaration = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ClassDeclaration {
 		this.methodDeclaration = methodDeclaration;
 	}
 	
-	public CLassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
+	public ClassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
 			MethodDeclaration methodDeclaration){
 		this.firstIdentifier = firstIdentifier;
 		this.varDeclaration = new ArrayList<>();
@@ -78,6 +78,6 @@ public class ClassDeclaration {
 	}
 	
 	public String getValue(){
-		
+		return "";
 	}
 }
