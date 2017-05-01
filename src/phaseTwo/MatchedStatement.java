@@ -2,7 +2,7 @@ package phaseTwo;
 
 public class MatchedStatement extends Matched{
 	Statement statement;
-	public MatchedStatement(Statement) {
+	public MatchedStatement(Statement statement) {
 		this.statement = statement;
 	}
 	@Override
