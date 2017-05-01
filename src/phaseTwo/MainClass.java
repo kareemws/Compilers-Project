@@ -12,8 +12,9 @@ public class MainClass {
 	}
 	
 	public String getValue(){
-		System.out.println("class " + firstIdentifier.getValue() + " { public static void main ( String [ ] " + 
-							secondIdentifier.getValue() + " ) { " + statement.getValue() + " } } ");
+		String result = "class " + firstIdentifier.getValue() + " { public static void main ( String [ ] " + 
+							secondIdentifier.getValue() + " ) { " + statement.getValue() + " } } " ;
+		return result ;
 	}
 	// end Main 
 }
