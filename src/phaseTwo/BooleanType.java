@@ -4,7 +4,7 @@ public class BooleanType implements Type {
 
 	private Bracket bracket;
 	
-	public BooleanValue(Bracket bracket){
+	public BooleanType(Bracket bracket){
 		this.bracket = bracket;
 	}
 	@Override

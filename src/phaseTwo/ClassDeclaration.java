@@ -77,7 +77,7 @@ public class ClassDeclaration {
 		this.methodDeclaration.add(methodDeclaration);
 	}
 	
-	public void gertValue(){
+	public String getValue(){
 		
 	}
 }
