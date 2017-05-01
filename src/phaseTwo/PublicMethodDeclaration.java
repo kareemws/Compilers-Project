@@ -2,9 +2,7 @@ package phaseTwo;
 
 import java.util.ArrayList;
 
-import javax.sound.sampled.LineEvent.Type;
-
-public class PublicMethodDeclaration {
+public class PublicMethodDeclaration implements MethodDeclaration{
 	Type type;
 	Identifier identifier;
 	ArrayList <Type> types = new ArrayList<>();
@@ -58,6 +56,7 @@ public class PublicMethodDeclaration {
 		for(int i=0 ; i < statements.size() ; i++)
 			result += statements.get(i).getValue() + " " ;
 		result += " return " + expression.getValue() + " ; } " ;
+		return result ;
 	}
 	
 	// end class

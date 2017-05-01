@@ -2,8 +2,6 @@ package phaseTwo;
 
 import java.util.ArrayList;
 
-import javax.sound.sampled.LineEvent.Type;
-
 public class PrivateMethodDeclaration implements MethodDeclaration{
 	Type type;
 	Identifier identifier;
@@ -58,6 +56,8 @@ public class PrivateMethodDeclaration implements MethodDeclaration{
 		for(int i=0 ; i < statements.size() ; i++)
 			result += statements.get(i).getValue() + " " ;
 		result += " return " + expression.getValue() + " ; } " ;
+		
+		return result ;
 	}
 	
 	// end class
