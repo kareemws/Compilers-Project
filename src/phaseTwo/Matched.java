@@ -10,6 +10,10 @@ public class Matched {
 		this.leftMatched = leftMatched;
 		this.rightMatched = rightMatched;
 	}
+	
+	public Matched() {
+		
+	}
 	public String getValue() {
 		return "if ( " + expression.getValue() + " ) "  + leftMatched.getValue() + " else " + rightMatched.getValue();
 	}
