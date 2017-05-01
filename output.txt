@@ -1,55 +1,41 @@
-<PUBLIC>: public
 <CLASS>: class
-<ID>: classid
+<ID>: myclass
 <LEFT_CURLY_B>: {
-<EOL>: \n
-<PUBLIC>: public
-<STATIC>: static
-<VOID>: void
-<MAIN>: main
-<LEFT_ROUND_B>: (
-<STRING>: String
-<LEFT_SQUARE_B>: [
-<RIGHT_SQUARE_B>: ]
-<ID>: argsid
-<RIGHT_ROUND_B>: )
-<LEFT_CURLY_B>: {
-<EOL>: \n
+<EOL>: 
+
+<COMMENT2>: /* my ultimate comment */
+<EOL>: 
+
 <INT>: int
-<ID>: intvalue
+<ID>: var
+<RIGHT_ROUND_B>: )
+<RIGHT_ROUND_B>: )
+<ID>: XX
+<INTEGRAL_LITERAL>: 1
 <EQUAL>: =
+<INTEGRAL_LITERAL>: 0
+<SEMICOLON>: ;
+<COMMENT_R>: */
+<EOL>: 
+
+<INT>: int
+<INTEGRAL_LITERAL>: 3
+<ID>: CC
+<INTEGRAL_LITERAL>: 1
+<RIGHT_ROUND_B>: )
+<EQUAL>: =
+<INTEGRAL_LITERAL>: 0
+<SEMICOLON>: ;
+<COMMENT_R>: */
+<EOL>: 
+
 <INTEGRAL_LITERAL>: 10
 <PLUS>: +
 <INTEGRAL_LITERAL>: 5
 <SEMICOLON>: ;
-<EOL>: \n
-<INT>: int
-<ID>: double
-<EQUAL>: =
-<INTEGRAL_LITERAL>: 5
-<SEMICOLON>: ;
-<EOL>: \n
-<STRING>: String
-<ID>: sid
-<EQUAL>: =
-<STRING_LITERAL>: "fadsfkasdfewj94u3904n.dvxvmcx645"
-<SEMICOLON>: ;
-<EOL>: \n
-<COMMENT1>: //asdfdsafdsafasd
-<EOL>: \n
-<COMMENT2>: /*sdfdsaf
-		sdafdsafa
-		fasdfsdfasdf
-		sdafasdfasd
-		*/
-<EOL>: \n
-<STRING>: String
-<ID>: sid
-<EQUAL>: =
-<STRING_LITERAL>: "fadsfkasdfewj94\"u3904n.dvxvmcx645"
-<SEMICOLON>: ;
-<EOL>: \n
+<EOL>: 
+
 <RIGHT_CURLY_B>: }
-<EOL>: \n
-<RIGHT_CURLY_B>: }
-<EOL>: \n
+<SEMICOLON>: ;
+<EOL>: 
+

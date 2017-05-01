@@ -29,9 +29,7 @@ abstract public class Tokenizer {
 				tempToken.setEndIndex(matcher.end());
 				tempToken.setStartIndex(matcher.start());
 				tempToken.setLabel(tokens.get(i).label);
-				if(matcher.group().equals("\n"))
-					tempToken.setValue("\\n");
-				else if(i == 2 || i == 3)
+				if(i == 2)
 				{
 					String tempString = matcher.group();
 					tempString.replace("\n", "\\n");
@@ -80,7 +78,6 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<RIGHT_ROUND_B>", "\\)"));
 		tokens.add(new RegexPair("<COMMA>", ","));
 		tokens.add(new RegexPair("<SEMICOLON>", ";"));
-		tokens.add(new RegexPair("<DOT>", "\\."));
 		tokens.add(new RegexPair("<NOT>", "!"));
 		tokens.add(new RegexPair("<EQUAL>", "="));
 		tokens.add(new RegexPair("<AND>", "&&"));
@@ -106,6 +103,7 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<NEW>", "(?<!\\w)new(?!\\w)"));
 		tokens.add(new RegexPair("<EXTENDS>", "(?<!\\w)extends(?!\\w)"));
 		tokens.add(new RegexPair("<SYSTEM.OUT.PRINTLN>", "(?<!\\w)System.out.println(?!\\w)"));
+		tokens.add(new RegexPair("<DOT>", "\\."));
 		
 		//Data types
 		tokens.add(new RegexPair("<INT>", "(?<!\\w)int(?!\\w)")) ;
@@ -114,6 +112,8 @@ abstract public class Tokenizer {
 		tokens.add(new RegexPair("<CHARACTER>", "(?<!\\w)char(?!\\w)"));
 		tokens.add(new RegexPair("<BOOLEAN>", "(?<!\\w)boolean(?!\\w)"));
 		tokens.add(new RegexPair("<ID>", "[^\\s+]+"));
+		
+		//""
 	}
 
 	private static void sortResult(ArrayList<Token> result)
