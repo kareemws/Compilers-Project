@@ -4,54 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import phaseTwo.AfterDot;
-import phaseTwo.AfterDot1;
-import phaseTwo.AfterExpression;
-import phaseTwo.AfterExpression1;
-import phaseTwo.AfterExpression2;
-import phaseTwo.AfterExpression3;
-import phaseTwo.AfterIdentifierStmnt;
-import phaseTwo.AfterIdentifierStmnt1;
-import phaseTwo.AfterIdentifierStmnt2;
-import phaseTwo.AfterNew;
-import phaseTwo.AfterNew1;
-import phaseTwo.AfterNew2;
-import phaseTwo.BinaryOp;
-import phaseTwo.BinaryOp1;
-import phaseTwo.BinaryOp2;
-import phaseTwo.BinaryOp3;
-import phaseTwo.BinaryOp4;
-import phaseTwo.BinaryOp5;
-import phaseTwo.BooleanType;
-import phaseTwo.Bracket;
-import phaseTwo.CharType;
-import phaseTwo.ClassDeclaration;
-import phaseTwo.Expression;
-import phaseTwo.ExpressionTerminals;
-import phaseTwo.Epsilon;
-import phaseTwo.ExistingBracket;
-import phaseTwo.FloatType;
-import phaseTwo.Goal;
-import phaseTwo.Identifier;
-import phaseTwo.IfStatement;
-import phaseTwo.IntType;
-import phaseTwo.MainClass;
-import phaseTwo.Matched;
-import phaseTwo.Matched1;
-import phaseTwo.MatchedStatement;
-import phaseTwo.MethodDeclaration;
-import phaseTwo.PrivateMethodDeclaration;
-import phaseTwo.PublicMethodDeclaration;
-import phaseTwo.Statement;
-import phaseTwo.Statement4;
-import phaseTwo.Statement5;
-import phaseTwo.StringType;
-import phaseTwo.Type;
-import phaseTwo.UnMatched;
-import phaseTwo.UnMatchedDash;
-import phaseTwo.UnMatchedDash1;
-import phaseTwo.UnMatchedDash2;
-import phaseTwo.VarDeclaration;
+import phaseTwo.*;
 
 public class Parser {
 
@@ -232,7 +185,6 @@ public class Parser {
 			return new ClassDeclaration(firstIdentifier, secondIdentifier, varDeclarationsArray,
 					methodDeclarationsArray);
 	}
-	
 
 	
 	private VarDeclaration varDeclaration() {
@@ -586,11 +538,7 @@ public class Parser {
 		else
 			return null;
 	}
-	
-	private AfterDot afterDot(){
-		
-	}
-	
+
 	
 	private Identifier identifier() {
 		Lexeme temp = lexemes.peek();
@@ -599,6 +547,7 @@ public class Parser {
 		lexemes.poll();
 		return new Identifier(temp.getLabel());
 	}
+	
 	
 	
 	private IfStatement ifStatement(){
@@ -745,4 +694,108 @@ public class Parser {
 		
 		return new UnMatchedDash2(matched, unMatched);
 	}
+
+	private Expression expression(){
+		ExpressionTerminals expressionTerminals = ExpressionTerminals();
+		if(expressionTerminals == null){
+			return null;
+		}
+		
+		ExpressionDash expressionDash = expressionDash();
+		if(expressionDash == null){
+			return null;
+		}
+		
+		return new Expression(expressionTerminals, expressionDash);
+	}
+
+	private ExpressionDash expressionDash(){
+		return expressionDash1();
+	}
+	
+	private ExpressionDash expressionDash1(){
+		AfterExpression afterExpression = afterExpression();
+		if(afterExpression == null){
+			return expressionDash2();
+		}
+		
+		ExpressionDash expressionDash = expressionDash();
+		if(expressionDash == null)
+			return expressionDash2();
+		
+		return new ExpressionDash1(afterExpression, expressionDash);
+	}
+	
+	private ExpressionDash expressionDash2(){
+		return new ExpressionDash2();
+	}
+
+	private AfterDot afterDot(){
+		return afterDot1();
+	}
+	
+	private AfterDot afterDot1(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LENGTH){
+			compactQueues(garabageQueue);
+			return afterDot2();
+		}
+		
+		return new AfterDot1();
+	}
+	
+	private AfterDot afterDot2(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Identifier identifier = identifier();
+		if(identifier == null){
+			return null;
+		}
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		ArrayList<Expression> expressions = new ArrayList<>();
+		Expression expression;
+		for(int i=0; true; i++){
+			if(i == 0){
+				expression = expression();
+				if(expression == null)
+					break;
+				expressions.add(expression);
+			}else
+			{
+				temp = lexemes.poll();
+				if(temp.getLabel() != Token.COMMA){
+					break;
+				}else{
+					garabageQueue.add(lexemes.poll());
+					expression = expression();
+					if(expression == null){
+						compactQueues(garabageQueue);
+						return null;
+					}
+					expressions.add(expression);
+				}
+			}
+		}
+
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		Expression[] expressionsArray = null;
+		expressions.toArray(expressionsArray);
+		return new AfterDot2(identifier, expressionsArray);
+	}
+
 }
