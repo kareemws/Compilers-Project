@@ -1,6 +1,6 @@
 package phaseTwo;
 
-public class MatchedStatement extends Matched{
+public class MatchedStatement implements Matched{
 	Statement statement;
 	public MatchedStatement(Statement statement) {
 		this.statement = statement;
