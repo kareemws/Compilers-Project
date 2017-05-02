@@ -6,75 +6,23 @@ public class ClassDeclaration {
 
 	private Identifier firstIdentifier;
 	private Identifier secondIdentifier;
-	private ArrayList<VarDeclaration> varDeclaration;
-	private ArrayList<MethodDeclaration> methodDeclaration;
-	
-	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
-			ArrayList<MethodDeclaration> methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.secondIdentifier = secondIdentifier;
-		this.varDeclaration = varDeclaration;
-		this.methodDeclaration = methodDeclaration;
-	}
-	
-	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, ArrayList<VarDeclaration> varDeclaration,
-			MethodDeclaration methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.secondIdentifier = secondIdentifier;
-		this.varDeclaration = varDeclaration;
-		this.methodDeclaration = new ArrayList<>();
-		this.methodDeclaration.add(methodDeclaration);
-	}
-	
-	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
-			ArrayList<MethodDeclaration> methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.secondIdentifier = secondIdentifier;
-		this.varDeclaration = new ArrayList<>();
-		this.varDeclaration.add(varDeclaration);
-		this.methodDeclaration = methodDeclaration;
-	}
-	
-	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier, VarDeclaration varDeclaration,
-			MethodDeclaration methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.secondIdentifier = secondIdentifier;
-		this.varDeclaration = new ArrayList<>();
-		this.varDeclaration.add(varDeclaration);
-		this.methodDeclaration = new ArrayList<>();
-		this.methodDeclaration.add(methodDeclaration);
-	}
+	private VarDeclaration[] varDeclarations;
+	private MethodDeclaration[] methodDeclarations;
 
-	public ClassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
-			ArrayList<MethodDeclaration> methodDeclaration){
+	public ClassDeclaration(Identifier firstIdentifier, Identifier secondIdentifier,
+			VarDeclaration[] varDeclarations, MethodDeclaration...methodDeclarations){
 		this.firstIdentifier = firstIdentifier;
-		this.varDeclaration = varDeclaration;
-		this.methodDeclaration = methodDeclaration;
+		this.secondIdentifier = secondIdentifier;
+		this.varDeclarations = varDeclarations;
+		this.methodDeclarations = methodDeclarations;
 	}
 	
-	public ClassDeclaration(Identifier firstIdentifier, ArrayList<VarDeclaration> varDeclaration,
-			MethodDeclaration methodDeclaration){
+	public ClassDeclaration(Identifier firstIdentifier, VarDeclaration[] varDeclarations,
+			MethodDeclaration...methodDeclarations){
 		this.firstIdentifier = firstIdentifier;
-		this.varDeclaration = varDeclaration;
-		this.methodDeclaration = new ArrayList<>();
-		this.methodDeclaration.add(methodDeclaration);
-	}
-	
-	public ClassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
-			ArrayList<MethodDeclaration> methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.varDeclaration = new ArrayList<>();
-		this.varDeclaration.add(varDeclaration);
-		this.methodDeclaration = methodDeclaration;
-	}
-	
-	public ClassDeclaration(Identifier firstIdentifier, VarDeclaration varDeclaration,
-			MethodDeclaration methodDeclaration){
-		this.firstIdentifier = firstIdentifier;
-		this.varDeclaration = new ArrayList<>();
-		this.varDeclaration.add(varDeclaration);
-		this.methodDeclaration = new ArrayList<>();
-		this.methodDeclaration.add(methodDeclaration);
+		this.secondIdentifier = null;
+		this.varDeclarations = varDeclarations;
+		this.methodDeclarations = methodDeclarations;
 	}
 	
 	public String getValue(){
