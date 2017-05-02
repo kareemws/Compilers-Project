@@ -57,5 +57,4 @@ public class Parser {
 		Identifier identifier = identifier();
 		return new VarDeclaration(type, identifier);
 	}
-	
 }
