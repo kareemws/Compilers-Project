@@ -3,7 +3,10 @@ package phaseOne;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +14,7 @@ import java.util.regex.Pattern;
 abstract public class Tokenizer {
 	private static ArrayList<RegexPair> tokens;
 	
-	public static ArrayList<Lexeme>tokenize(String source)
+	public static Queue<Lexeme> tokenize(String source)
 	{
 		setTokensMap();
 		ArrayList<Lexeme> result = new ArrayList<>();
@@ -48,8 +51,7 @@ abstract public class Tokenizer {
 				source = temp.toString();
 			}
 		}
-		sortResult(result);
-		return result;
+		return sortResult(result);
 	}
 	
 	private static void setTokensMap()
@@ -116,7 +118,7 @@ abstract public class Tokenizer {
 		//""
 	}
 
-	private static void sortResult(ArrayList<Lexeme> result)
+	private static Queue<Lexeme> sortResult(ArrayList<Lexeme> result)
 	{
 		Lexeme tempToken = null;
 		for(int i=0; i < result.size(); i++)
@@ -131,5 +133,7 @@ abstract public class Tokenizer {
 				}
 			}
 		}
+		Queue<Lexeme> temp = new LinkedList<>(result);
+		return temp;
 	}
 }
