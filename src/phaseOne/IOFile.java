@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class IOFile {
 	public static String readFile() {
@@ -27,7 +28,7 @@ public class IOFile {
 		return result;
 	}
 	
-	public static void writeOnFile(ArrayList<Lexeme> tokens) {
+	public static void writeOnFile(Queue<Lexeme> tokens) {
 		try {
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
 			for(Lexeme token: tokens) {

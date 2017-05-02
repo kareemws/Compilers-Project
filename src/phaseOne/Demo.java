@@ -11,6 +11,6 @@ public class Demo {
 	public static void main(String[] args) {	
 		String src = IOFile.readFile();
 		Queue<Lexeme> result = Tokenizer.tokenize(src) ;
-		//IOFile.writeOnFile(result);
+		IOFile.writeOnFile(result);
 	}
 }
