@@ -4,7 +4,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import phaseTwo.AfterDot;
+import phaseTwo.AfterDot1;
+import phaseTwo.AfterExpression;
+import phaseTwo.AfterExpression1;
+import phaseTwo.AfterExpression2;
+import phaseTwo.AfterExpression3;
 import phaseTwo.AfterIdentifierStmnt;
+import phaseTwo.AfterIdentifierStmnt1;
+import phaseTwo.AfterIdentifierStmnt2;
+import phaseTwo.BinaryOp;
+import phaseTwo.BinaryOp1;
+import phaseTwo.BinaryOp2;
+import phaseTwo.BinaryOp3;
+import phaseTwo.BinaryOp4;
+import phaseTwo.BinaryOp5;
 import phaseTwo.BooleanType;
 import phaseTwo.Bracket;
 import phaseTwo.CharType;
@@ -202,15 +216,7 @@ public class Parser {
 					methodDeclarationsArray);
 	}
 	
-	private Identifier identifier() {
-		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() != Token.ID){
-			System.out.println("Error");
-			return null;
-		}
-		lexemes.poll();
-		return new Identifier(temp.getLabel());
-	}
+
 	
 	private VarDeclaration varDeclaration() {
 		Type type = type();
@@ -377,32 +383,179 @@ public class Parser {
 			return new Epsilon();
 	}
 	
-	ArrayList <Statement> statements = new ArrayList<>() ;
+//	ArrayList <Statement> statements = new ArrayList<>() ;
+//	
+//	private Statement statement(){
+//		return statement1() ;
+//	}
+//	
+//	private Statement statement1(){
+//		Lexeme tempLexeme = lexemes.poll();
+//
+//		if(tempLexeme.getLabel() == Token.LEFT_CURLY_B){
+//			statements.add(statement());
+//			tempLexeme = lexemes.poll() ;
+//			if(tempLexeme.getLabel() != Token.RIGHT_CURLY_B){
+//				System.out.println("Error, Missed \"}\" ");
+//				return null ;
+//			}
+//		}
+//		else{
+//			//return statement4() ;
+//		}
+//	}
+//	
+//	private Statement statement4(){
+//		Identifier identifier = identifier();
+//		AfterIdentifierStmnt afterIdentifierStmnt = afterIdentifierStmnt();
+//		return;
+//	}
 	
-	private Statement statement(){
-		return statement1() ;
-	}
-	
-	private Statement statement1(){
-		Lexeme tempLexeme = lexemes.poll();
-
-		if(tempLexeme.getLabel() == Token.LEFT_CURLY_B){
-			statements.add(statement());
-			tempLexeme = lexemes.poll() ;
-			if(tempLexeme.getLabel() != Token.RIGHT_CURLY_B){
-				System.out.println("Error, Missed \"}\" ");
+	private AfterIdentifierStmnt afterIdentifierStmnt(){
+		Expression expression1 = expression() ;
+		Expression expression2 = expression() ;
+		Queue<Lexeme> tempLexemes = lexemes ;
+		Lexeme temp1 = tempLexemes.poll();
+		if(temp1.getLabel() == Token.EQUAL){
+			Lexeme temp2 = tempLexemes.poll();
+			if(temp2.getLabel() == Token.SEMICOLON){
+				if(expression1 != null){
+					lexemes.poll();
+					lexemes.poll();
+					return new AfterIdentifierStmnt1(expression) ;
+				}
+				else{
+					System.out.println("Error");
+					return null ;
+				}
+			}
+			else{
+				System.out.println("Error");
+				return null ;
+			}
+		}
+		else if(temp1.getLabel() == Token.LEFT_SQUARE_B){
+			Lexeme temp2 = tempLexemes.poll();
+			if(temp2.getLabel() == Token.RIGHT_SQUARE_B){
+				Lexeme temp2 = tempLexemes.poll();
+				if(temp2.getLabel() == Token.EQUAL){
+					Lexeme temp2 = tempLexemes.poll();
+					if(temp2.getLabel() == Token.SEMICOLON){
+						if(expression1 != null && expression2 != null){
+							lexemes.poll();
+							lexemes.poll();
+							lexemes.poll();
+							lexemes.poll();
+							return new AfterIdentifierStmnt2(expression) ;
+						}
+						else{
+							System.out.println("Error");
+							return null ;
+						}
+					}
+					else{
+						System.out.println("Error");
+						return null ;
+					}
+				}
+				else{
+					System.out.println("Error");
+					return null ;
+				}
+			}
+			else{
+				System.out.println("Error");
 				return null ;
 			}
 		}
 		else{
-			//return statement4() ;
+			System.out.println("Error");
+			return null ;
+		}
+			
+	}
+	
+	private AfterExpression afterExpression(){
+		Expression expression = expression() ;
+		AfterDot afterDot = afterDot() ;
+		BinaryOp binaryOp = binaryOp();
+		if(expression != null){
+			Queue<Lexeme> tempLexemes = lexemes ;
+			Lexeme temp = tempLexemes.poll();
+			if(temp.getLabel() == Token.LEFT_SQUARE_B){
+				temp = tempLexemes.poll();
+				if(temp.getLabel() == Token.RIGHT_SQUARE_B){
+					lexemes.poll() ;
+					lexemes.poll() ;
+					return new AfterExpression2(expression) ;
+				}
+				else{
+					System.out.println("Error");
+					return null ;
+				}
+			}
+			else if(temp.getLabel() == Token.DOT){
+				lexemes.poll();
+				return new AfterExpression3(afterDot) ;
+			}
+			else if(temp.getLabel() == Token.AND || temp.getLabel() == Token.LESSTHAN || temp.getLabel() == Token.PLUS ||
+					temp.getLabel() == Token.MINUS || temp.getLabel() == Token.MULTIPLY){
+				lexemes.poll();
+				return new AfterExpression1(expression, binaryOp);
+			}
+			else{
+				System.out.println("Error");
+				return null ;
+			}
+		}
+		else{
+			System.out.println("Error");
+			return null ;
 		}
 	}
 	
-	//private Statement statement4(){
-		//Identifier identifier = identifier();
-		//AfterIdentifierStmnt afterIdentifierStmnt = afterIdentifierStmnt();
-		//return;
-	//}
+	private BinaryOp binaryOp(){
+		Lexeme temp = lexemes.peek();
+		if(temp.getLabel() == Token.AND){
+			lexemes.poll();
+			return new BinaryOp1() ;
+		}
+		else if(temp.getLabel() == Token.LESSTHAN){
+			lexemes.poll();
+			return new BinaryOp2() ;
+		}
+		else if(temp.getLabel() == Token.PLUS){
+			lexemes.poll();
+			return new BinaryOp3() ;
+		}
+		else if(temp.getLabel() == Token.MINUS){
+			lexemes.poll();
+			return new BinaryOp4() ;
+		}
+		else if(temp.getLabel() == Token.MULTIPLY){
+			lexemes.poll();
+			return new BinaryOp5() ;
+		}
+		else{
+			System.out.println("Error");
+			return null ;
+		}
+	}
+	
+	private AfterDot afterDot(){
+		
+	}
+	
+	
+	private Identifier identifier() {
+		Lexeme temp = lexemes.peek();
+		if(temp.getLabel() != Token.ID){
+			System.out.println("Error");
+			return null;
+		}
+		lexemes.poll();
+		return new Identifier(temp.getLabel());
+	}
+	
 	
 }
