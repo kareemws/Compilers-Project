@@ -15,8 +15,12 @@ import phaseTwo.ExistingBracket;
 import phaseTwo.FloatType;
 import phaseTwo.Goal;
 import phaseTwo.Identifier;
+import phaseTwo.IfStatement;
 import phaseTwo.IntType;
 import phaseTwo.MainClass;
+import phaseTwo.Matched;
+import phaseTwo.Matched1;
+import phaseTwo.MatchedStatement;
 import phaseTwo.MethodDeclaration;
 import phaseTwo.PrivateMethodDeclaration;
 import phaseTwo.PublicMethodDeclaration;
@@ -25,6 +29,10 @@ import phaseTwo.Statement4;
 import phaseTwo.Statement5;
 import phaseTwo.StringType;
 import phaseTwo.Type;
+import phaseTwo.UnMatched;
+import phaseTwo.UnMatchedDash;
+import phaseTwo.UnMatchedDash1;
+import phaseTwo.UnMatchedDash2;
 import phaseTwo.VarDeclaration;
 
 public class Parser {
@@ -33,6 +41,11 @@ public class Parser {
 	
 	public Parser(Queue<Lexeme> lexemes){
 		this.lexemes = lexemes;
+	}
+	
+	private void compactQueues(Queue<Lexeme> garabageQueue){
+		garabageQueue.addAll(lexemes);
+		lexemes = garabageQueue;
 	}
 	
 	public Goal parse(){
@@ -405,4 +418,148 @@ public class Parser {
 		//return;
 	//}
 	
+	private IfStatement ifStatement(){
+		return unMatched();
+	}
+	
+	private UnMatched unMatched(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.IF){
+			compactQueues(garabageQueue);
+			return matched();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return matched();
+		}
+		
+		Expression expression = expression();
+		if(expression == null){
+			compactQueues(garabageQueue);
+			return matched();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return matched();
+		}
+		
+		UnMatchedDash unMatchedDash = unMatchedDash();
+		if(unMatchedDash == null){
+			compactQueues(garabageQueue);
+			return matched();
+		}
+		
+		return new UnMatched(expression, unMatchedDash);
+	}
+	
+	private Matched matched(){
+		return matched1();
+	}
+	
+	private Matched matched1(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.IF){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		Expression expression = expression();
+		if(expression == null){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		Matched matched1 = matched();
+		if(matched1 == null){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.ELSE){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		Matched matched2 = matched();
+		if(matched2 == null){
+			compactQueues(garabageQueue);
+			return matched2();
+		}
+		
+		return new Matched1(expression, matched1, matched2);
+	}
+
+	private Matched matched2(){
+		Statement statement = statement();
+		if(statement == null){
+			return null;
+		}
+		
+		return new MatchedStatement(statement);
+	}
+
+	private UnMatchedDash unMatchedDash(){
+		return unMatchedDash1();
+	}
+	
+	private UnMatchedDash unMatchedDash1(){
+		Statement statement = statement();
+		if(statement == null){
+			return unMatchedDash2();
+		}
+		
+		return new UnMatchedDash1(statement);
+	}
+
+	private UnMatchedDash unMatchedDash2(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Matched matched = matched();
+		if(matched == null){
+			return null;
+		}
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() == Token.ELSE){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		UnMatched unMatched = unMatched();
+		if(unMatched == null){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		return new UnMatchedDash2(matched, unMatched);
+	}
 }
