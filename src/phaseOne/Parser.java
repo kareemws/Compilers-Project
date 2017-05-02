@@ -13,6 +13,9 @@ import phaseTwo.AfterExpression3;
 import phaseTwo.AfterIdentifierStmnt;
 import phaseTwo.AfterIdentifierStmnt1;
 import phaseTwo.AfterIdentifierStmnt2;
+import phaseTwo.AfterNew;
+import phaseTwo.AfterNew1;
+import phaseTwo.AfterNew2;
 import phaseTwo.BinaryOp;
 import phaseTwo.BinaryOp1;
 import phaseTwo.BinaryOp2;
@@ -24,6 +27,7 @@ import phaseTwo.Bracket;
 import phaseTwo.CharType;
 import phaseTwo.ClassDeclaration;
 import phaseTwo.Expression;
+import phaseTwo.ExpressionTerminals;
 import phaseTwo.Epsilon;
 import phaseTwo.ExistingBracket;
 import phaseTwo.FloatType;
@@ -437,15 +441,11 @@ public class Parser {
 					lexemes.poll();
 					return new AfterIdentifierStmnt1(expression) ;
 				}
-				else{
-					System.out.println("Error");
-					return null ;
-				}
+				else
+					return null;
 			}
-			else{
-				System.out.println("Error");
-				return null ;
-			}
+			else
+				return null;
 		}
 		else if(temp1.getLabel() == Token.LEFT_SQUARE_B){
 			Lexeme temp2 = tempLexemes.poll();
@@ -461,70 +461,104 @@ public class Parser {
 							lexemes.poll();
 							return new AfterIdentifierStmnt2(expression) ;
 						}
-						else{
-							System.out.println("Error");
-							return null ;
-						}
+						else
+							return null;
 					}
-					else{
-						System.out.println("Error");
-						return null ;
-					}
+					else
+						return null;
 				}
-				else{
-					System.out.println("Error");
-					return null ;
-				}
+				else
+					return null;s
 			}
-			else{
-				System.out.println("Error");
-				return null ;
-			}
+			else
+				return null;
 		}
-		else{
-			System.out.println("Error");
-			return null ;
-		}
+		else
+			return null;
 			
 	}
 	
+	
+	private AfterNew afterNew(){
+		Lexeme temp = lexemes.peek();
+		Queue<Lexeme> garabageQueue = new LinkedList<>() ; 
+		if(temp.getLabel() == Token.INT){
+			Expression expression = expression() ;
+			if(expression != null){
+				temp = lexemes.poll();
+				garabageQueue.add(temp);
+				return new AfterNew1(expression) ;
+			}
+			else{
+				compactQueues(garabageQueue);
+				return null;
+			}
+		}
+		Identifier identifier = identifier();
+		if(identifier != null){
+			temp = lexemes.poll();
+			garabageQueue.add(temp);
+			return new AfterNew2(identifier) ;
+		}
+		else{
+			compactQueues(garabageQueue);
+			return null;
+		}
+	}
+	
 	private AfterExpression afterExpression(){
-		Expression expression = expression() ;
-		AfterDot afterDot = afterDot() ;
-		BinaryOp binaryOp = binaryOp();
-		if(expression != null){
-			Queue<Lexeme> tempLexemes = lexemes ;
-			Lexeme temp = tempLexemes.poll();
-			if(temp.getLabel() == Token.LEFT_SQUARE_B){
-				temp = tempLexemes.poll();
+		Queue<Lexeme> garabageQueue = new LinkedList<>() ;
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() == Token.LEFT_SQUARE_B){
+			Expression expression = expression() ;
+			if(expression != null){
+				temp = lexemes.poll();
+				garabageQueue.add(temp);
 				if(temp.getLabel() == Token.RIGHT_SQUARE_B){
-					lexemes.poll() ;
-					lexemes.poll() ;
 					return new AfterExpression2(expression) ;
 				}
 				else{
-					System.out.println("Error");
-					return null ;
+					compactQueues(garabageQueue);
+					return null;
 				}
 			}
-			else if(temp.getLabel() == Token.DOT){
-				lexemes.poll();
+			else{
+				compactQueues(garabageQueue);
+				return null;
+			}
+		}
+		else if(temp.getLabel() == Token.DOT){
+			AfterDot afterDot = afterDot() ;
+			if(afterDot != null){
+				temp = lexemes.poll();
+				garabageQueue.add(temp);
 				return new AfterExpression3(afterDot) ;
 			}
-			else if(temp.getLabel() == Token.AND || temp.getLabel() == Token.LESSTHAN || temp.getLabel() == Token.PLUS ||
-					temp.getLabel() == Token.MINUS || temp.getLabel() == Token.MULTIPLY){
-				lexemes.poll();
+			else{
+				compactQueues(garabageQueue);
+				return null;
+			}
+		}
+		else if(temp.getLabel() == Token.AND || temp.getLabel() == Token.LESSTHAN || temp.getLabel() == Token.PLUS ||
+			temp.getLabel() == Token.MINUS || temp.getLabel() == Token.MULTIPLY){
+			BinaryOp binaryOp = binaryOp() ;
+			Expression expression = expression() ;
+			if(expression != null){
+				temp = lexemes.poll();
+				garabageQueue.add(temp);
 				return new AfterExpression1(expression, binaryOp);
 			}
 			else{
-				System.out.println("Error");
-				return null ;
+				compactQueues(garabageQueue);
+				return null;
 			}
 		}
 		else{
-			System.out.println("Error");
-			return null ;
+			compactQueues(garabageQueue);
+			return null;
 		}
+
 	}
 	
 	private BinaryOp binaryOp(){
@@ -549,10 +583,8 @@ public class Parser {
 			lexemes.poll();
 			return new BinaryOp5() ;
 		}
-		else{
-			System.out.println("Error");
-			return null ;
-		}
+		else
+			return null;
 	}
 	
 	private AfterDot afterDot(){
@@ -562,10 +594,8 @@ public class Parser {
 	
 	private Identifier identifier() {
 		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() != Token.ID){
-			System.out.println("Error");
+		if(temp.getLabel() != Token.ID)
 			return null;
-		}
 		lexemes.poll();
 		return new Identifier(temp.getLabel());
 	}
