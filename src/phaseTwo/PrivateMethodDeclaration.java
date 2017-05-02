@@ -11,31 +11,11 @@ public class PrivateMethodDeclaration implements MethodDeclaration{
 	ArrayList<Statement> statements = new ArrayList<>();;
 	Expression expression ;
 	
-	public PrivateMethodDeclaration(Type type, Identifier identifier, ArrayList<VarDeclaration> varDeclarations, ArrayList<Statement> statements, Expression expression){
+	public PrivateMethodDeclaration(Type type, Identifier identifier, ArrayList<Type> types, ArrayList<Identifier> identifiers,ArrayList<VarDeclaration> varDeclarations,ArrayList<Statement> statements, Expression expression){
 		this.type = type ;
 		this.identifier = identifier;
-		this.types = null ;
-		this.identifiers = null ;
-		this.varDeclarations = varDeclarations ;
-		this.statements = statements ;
-		this.expression = expression;
-	}
-	
-	public PrivateMethodDeclaration(Type type, Identifier identifier, ArrayList<VarDeclaration> varDeclarations, ArrayList<Statement> statements, Expression expression, Type type2, Identifier identifier2 ){
-		this.type = type ;
-		this.identifier = identifier;
-		this.types = null ;
-		this.identifiers = null ;
-		this.varDeclarations = varDeclarations ;
-		this.statements = statements ;
-		this.expression = expression;
-	}
-	
-	public PrivateMethodDeclaration(Type type, Identifier identifier, ArrayList<VarDeclaration> varDeclarations, ArrayList<Statement> statements, Expression expression, ArrayList<Type> types ,ArrayList<Identifier> identifiers ){
-		this.type = type ;
-		this.identifier = identifier;
-		this.types = null ;
-		this.identifiers = null ;
+		this.types = types ;
+		this.identifiers = identifiers;
 		this.varDeclarations = varDeclarations ;
 		this.statements = statements ;
 		this.expression = expression;
