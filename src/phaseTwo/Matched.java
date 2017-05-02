@@ -1,7 +1,7 @@
 package phaseTwo;
 
 
-public class Matched {
+public class Matched implements IfStatement{
 	Expression expression;
 	Matched rightMatched;
 	Matched leftMatched;

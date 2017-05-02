@@ -1,17 +1,30 @@
 package phaseOne;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 
+import phaseTwo.AfterIdentifierStmnt;
+import phaseTwo.BooleanType;
+import phaseTwo.Bracket;
+import phaseTwo.CharType;
 import phaseTwo.ClassDeclaration;
 import phaseTwo.Expression;
+import phaseTwo.Epsilon;
+import phaseTwo.ExistingBracket;
+import phaseTwo.FloatType;
 import phaseTwo.Goal;
 import phaseTwo.Identifier;
+import phaseTwo.IntType;
 import phaseTwo.MainClass;
 import phaseTwo.MethodDeclaration;
 import phaseTwo.PrivateMethodDeclaration;
 import phaseTwo.PublicMethodDeclaration;
 import phaseTwo.Statement;
+import phaseTwo.Statement4;
+import phaseTwo.Statement5;
+import phaseTwo.StringType;
+import phaseTwo.Type;
 import phaseTwo.VarDeclaration;
 
 public class Parser {
@@ -190,7 +203,7 @@ public class Parser {
 	}
 	
 	private Identifier identifier() {
-		Lexeme temp = lexemes.peek()
+		Lexeme temp = lexemes.peek();
 		if(temp.getLabel() != Token.ID){
 			System.out.println("Error");
 			return null;
@@ -317,6 +330,79 @@ public class Parser {
 		if(accessModifier == Token.PRIVATE)
 			return new PrivateMethodDeclaration(type, identifier, types, identifiers, varDeclarations, statements, expression);
 		else
-			return new PublicMethodDeclaration(type, identifier, types, identifiers, varDeclarations, statements, expression)
+			return new PublicMethodDeclaration(type, identifier, types, identifiers, varDeclarations, statements, expression);
 	}
+	private Type type(){
+		Bracket bracket = bracket() ;
+		Lexeme temp = lexemes.peek();
+		if(temp.getLabel() == Token.INT){
+			lexemes.poll() ;
+			return new IntType(bracket) ;
+		}
+		else if(temp.getLabel() == Token.BOOLEAN){
+			lexemes.poll() ;
+			return new BooleanType(bracket) ;
+		}
+		else if(temp.getLabel() == Token.FLOAT){
+			lexemes.poll() ;
+			return new FloatType(bracket) ;
+		}
+		else if(temp.getLabel() == Token.STRING){
+			lexemes.poll() ;
+			return new StringType(bracket) ;
+		}
+		else if(temp.getLabel() == Token.CHARACTER){
+			lexemes.poll() ;
+			return new CharType(bracket) ;
+		}
+		System.out.println("Error");
+		return null ;
+		
+	}
+	
+	private Bracket bracket(){
+		Queue<Lexeme> tempLexemes = lexemes ;
+		Lexeme temp1 = tempLexemes.poll();
+		Lexeme temp2 = tempLexemes.peek();
+		if(temp1.getLabel() == Token.LEFT_SQUARE_B && temp2.getLabel() == Token.RIGHT_SQUARE_B ){
+			lexemes.poll() ;
+			lexemes.poll() ;
+			return new ExistingBracket();
+		}
+		else if(temp1.getLabel() != Token.LEFT_SQUARE_B || temp2.getLabel() != Token.RIGHT_SQUARE_B ){
+			System.out.println("Error");
+			return null ;
+		}
+		else
+			return new Epsilon();
+	}
+	
+	ArrayList <Statement> statements = new ArrayList<>() ;
+	
+	private Statement statement(){
+		return statement1() ;
+	}
+	
+	private Statement statement1(){
+		Lexeme tempLexeme = lexemes.poll();
+
+		if(tempLexeme.getLabel() == Token.LEFT_CURLY_B){
+			statements.add(statement());
+			tempLexeme = lexemes.poll() ;
+			if(tempLexeme.getLabel() != Token.RIGHT_CURLY_B){
+				System.out.println("Error, Missed \"}\" ");
+				return null ;
+			}
+		}
+		else{
+			//return statement4() ;
+		}
+	}
+	
+	//private Statement statement4(){
+		//Identifier identifier = identifier();
+		//AfterIdentifierStmnt afterIdentifierStmnt = afterIdentifierStmnt();
+		//return;
+	//}
+	
 }
