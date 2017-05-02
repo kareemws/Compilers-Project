@@ -27,10 +27,10 @@ public class IOFile {
 		return result;
 	}
 	
-	public static void writeOnFile(ArrayList<Token> tokens) {
+	public static void writeOnFile(ArrayList<Lexeme> tokens) {
 		try {
 			PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
-			for(Token token: tokens) {
+			for(Lexeme token: tokens) {
 				writer.println(token.getLabel() + ": " + token.getValue());
 			}
 			writer.close();

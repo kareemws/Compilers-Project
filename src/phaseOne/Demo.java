@@ -9,7 +9,7 @@ public class Demo {
 	
 	public static void main(String[] args) {	
 		String src = IOFile.readFile();
-		ArrayList<Token> result = Tokenizer.tokenize(src) ;
+		ArrayList<Lexeme> result = Tokenizer.tokenize(src) ;
 		IOFile.writeOnFile(result);
 	}
 }

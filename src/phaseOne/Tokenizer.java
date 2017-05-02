@@ -11,11 +11,11 @@ import java.util.regex.Pattern;
 abstract public class Tokenizer {
 	private static ArrayList<RegexPair> tokens;
 	
-	public static ArrayList<Token>tokenize(String source)
+	public static ArrayList<Lexeme>tokenize(String source)
 	{
 		setTokensMap();
-		ArrayList<Token> result = new ArrayList<>();
-		Token tempToken = null;
+		ArrayList<Lexeme> result = new ArrayList<>();
+		Lexeme tempToken = null;
 		Pattern pattern;
 		Matcher matcher;
 		
@@ -25,7 +25,7 @@ abstract public class Tokenizer {
 			matcher = pattern.matcher(source);
 			while(matcher.find())
 			{
-				tempToken = new Token();
+				tempToken = new Lexeme();
 				tempToken.setEndIndex(matcher.end());
 				tempToken.setStartIndex(matcher.start());
 				tempToken.setLabel(tokens.get(i).label);
@@ -116,9 +116,9 @@ abstract public class Tokenizer {
 		//""
 	}
 
-	private static void sortResult(ArrayList<Token> result)
+	private static void sortResult(ArrayList<Lexeme> result)
 	{
-		Token tempToken = null;
+		Lexeme tempToken = null;
 		for(int i=0; i < result.size(); i++)
 		{
 			for(int l=i+1; l < result.size(); l++)

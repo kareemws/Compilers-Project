@@ -7,17 +7,17 @@ package phaseOne;
  * @author Kareem Waleed, Abdallah Eid
  *
  */
-public class Token {
-	private String label;
+public class Lexeme {
+	private String token;
 	private String value;
 	private int startIndex;
 	private int endIndex;
 	
 	public String getLabel() {
-		return label;
+		return token;
 	}
 	public void setLabel(String label) {
-		this.label = label;
+		this.token = label;
 	}
 	public String getValue() {
 		return value;
