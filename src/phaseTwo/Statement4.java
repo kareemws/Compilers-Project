@@ -1,17 +1,15 @@
 package phaseTwo;
 
 public class Statement4 implements Statement{
-	Identifier identifier;
-	AfterIdentifierStmnt afterIdentifierStmnt ;
+	Expression expression ;
 	
-	public Statement4(Identifier identifier, AfterIdentifierStmnt afterIdentifierStmnt ){
-		this.identifier = identifier ;
-		this.afterIdentifierStmnt = afterIdentifierStmnt;
+	public Statement4(Expression expression){
+		this.expression = expression;
 	}
 	
 	@Override
 	public String getValue(){
-		return identifier.getValue() + " " + afterIdentifierStmnt.getValue() + " " ;
+		String result = " System.out.println ( " + expression.getValue() + " ) ; " ;
+		return result ;
 	}
-	
 }

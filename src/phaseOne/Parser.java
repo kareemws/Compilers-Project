@@ -739,7 +739,139 @@ public class Parser {
 
 	private Statement statement(){
 		
-		return null;
+		return statement1();
+	}
+	
+	private Statement statement1(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_CURLY_B){
+			compactQueues(garabageQueue);
+			return statement2();
+		}
+		
+		ArrayList<Statement> statements = new ArrayList<>();
+		while(true){
+			Statement statement = statement();
+			if(statement == null){
+				break;
+			}
+			statements.add(statement);
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+			compactQueues(garabageQueue);
+			return statement2();
+		}
+		Statement[] statementsArray = null;
+		statements.toArray(statementsArray);
+		return new Statement1(statementsArray);
+	}
+
+	private Statement statement2(){
+		IfStatement ifStatement = ifStatement();
+		if(ifStatement == null){
+			return statement3();
+		}
+		
+		return new Statement2(ifStatement);
+	}
+
+	private Statement statement3(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.WHILE){
+			compactQueues(garabageQueue);
+			return statement4();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return statement4();
+		}
+		
+		Expression expression = expression();
+		if(expression == null){
+			compactQueues(garabageQueue);
+			return statement4();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return statement4();
+		}
+		
+		Statement statement = statement();
+		if(statement == null){
+			compactQueues(garabageQueue);
+			return statement4();
+		}
+		
+		return new Statement3(expression, statement);
+	}
+	
+	private Statement statement4(){
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.SYSTEM_OUT_PRINTLN){
+			compactQueues(garabageQueue);
+			return statement5();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return statement5();
+		}
+		
+		Expression expression = expression();
+		if(expression == null){
+			compactQueues(garabageQueue);
+			return statement5();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return statement5();
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.SEMICOLON){
+			compactQueues(garabageQueue);
+			return statement5();
+		}
+		
+		return new Statement4(expression);
+	}
+
+	private Statement statement5(){
+		Identifier identifier = identifier();
+		if(identifier == null){
+			return null;
+		}
+		
+		AfterIdentifierStmnt afterIdentifierStmnt = afterIdentifierStmnt();
+		if(afterIdentifierStmnt == null){
+			return null;
+		}
+		
+		return new Statement5(identifier, afterIdentifierStmnt);
 	}
 	
 	private ExpressionTerminals expressionTerminals(){
@@ -866,4 +998,5 @@ public class Parser {
 		}
 		
 	}
+
 }

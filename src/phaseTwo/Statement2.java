@@ -1,17 +1,17 @@
 package phaseTwo;
 
-public class Statement2 implements Statement{
-	Statement statement ;
-	Expression expression ;
+public class Statement2 implements Statement {
+	IfStatement ifStatement ;
 	
-	Statement2(Statement statement, Expression expression){
-		this.statement = statement;
-		this.expression = expression;
+	public Statement2(IfStatement ifStatement) {
+		this.ifStatement = ifStatement ;
 	}
-	
+
 	@Override
-	public String getValue(){
-		String result = " while ( " + expression.getValue() + " ) " + statement.getValue() + " " ;
-		return result ;
+	public String getValue() {
+		return ifStatement.getValue() ;
 	}
+	
+	
+	
 }
