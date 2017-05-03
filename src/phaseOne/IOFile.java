@@ -45,6 +45,8 @@ public class IOFile {
 		       Lexeme lexeme = new Lexeme();
 		       lexeme.setLabel(token);
 		       lexeme.setValue(value);
+		       if(lexeme.getLabel().equals(Token.EOL) || lexeme.getLabel().equals(""))
+		    	   continue;
 		       lexemes.add(lexeme) ;
 		    }
 		} catch (FileNotFoundException e) {

@@ -27,7 +27,10 @@ public class Parser {
 	//checked
 	private Goal goal(){
 		MainClass mainClass = mainClass();
+		if(mainClass == null)
+			return null;
 		ArrayList<ClassDeclaration> classDeclarations = new ArrayList<>();
+		System.out.println("here");
 		while(true){
 			ClassDeclaration tempClassDeclaration = classDeclaration();
 			if(tempClassDeclaration == null)
@@ -38,7 +41,7 @@ public class Parser {
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.EOL){
+		if(!temp.getLabel().equals(Token.EOL)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -54,7 +57,7 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.CLASS){
+		if(!temp.getLabel().equals(Token.CLASS)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -69,64 +72,66 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
+		if(!temp.getLabel().equals(Token.LEFT_CURLY_B)){
+			compactQueues(garabageQueue);
+			return null;
+		}
+
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		System.out.println(temp.getLabel());
+		if(!temp.getLabel().equals(Token.PUBLIC)){
+			compactQueues(garabageQueue);
+			return null;
+		}
+
+		System.out.println("here");
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(!temp.getLabel().equals(Token.STATIC)){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(!temp.getLabel().equals(Token.VOID)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.PUBLIC){
+		if(!temp.getLabel().equals(Token.MAIN)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.STATIC){
-			compactQueues(garabageQueue);
-			return null;
-		}
-		
-		
-		temp = lexemes.poll();
-		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.VOID){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.MAIN){
+		if(!temp.getLabel().equals(Token.STRING)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_SQUARE_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.STRING){
-			compactQueues(garabageQueue);
-			return null;
-		}
-		
-		temp = lexemes.poll();
-		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_SQUARE_B){
-			compactQueues(garabageQueue);
-			return null;
-		}
-		
-		temp = lexemes.poll();
-		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_SQUARE_B){
+		if(!temp.getLabel().equals(Token.RIGHT_SQUARE_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -139,14 +144,14 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
+		if(!temp.getLabel().equals(Token.LEFT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -160,14 +165,14 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+		if(!temp.getLabel().equals(Token.RIGHT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+		if(!temp.getLabel().equals(Token.RIGHT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -181,7 +186,7 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.CLASS){
+		if(!temp.getLabel().equals(Token.CLASS)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -197,7 +202,7 @@ public class Parser {
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
 		Identifier secondIdentifier = null;
-		if(temp.getLabel() == Token.EXTENDS){
+		if(temp.getLabel().equals(Token.EXTENDS)){
 			secondIdentifier = identifier();
 			if(secondIdentifier == null){
 				return null;
@@ -206,7 +211,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
+		if(!temp.getLabel().equals(Token.LEFT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -231,7 +236,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+		if(!temp.getLabel().equals(Token.RIGHT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -264,7 +269,7 @@ public class Parser {
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.SEMICOLON){
+		if(!temp.getLabel().equals(Token.SEMICOLON)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -279,10 +284,10 @@ public class Parser {
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
 		String accessModifier = null;
-		if(temp.getLabel() == Token.PRIVATE){
+		if(temp.getLabel().equals(Token.PRIVATE)){
 			accessModifier = temp.getLabel();
 		}
-		else if(temp.getLabel() == Token.PUBLIC){
+		else if(temp.getLabel().equals(Token.PUBLIC)){
 			accessModifier = temp.getLabel();
 		}else{
 			compactQueues(garabageQueue);
@@ -304,7 +309,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -328,7 +333,7 @@ public class Parser {
 				identifiers.add(tempIdentifier);
 			}else{
 				temp = lexemes.poll();
-				if(temp.getLabel() != Token.COMMA){
+				if(!temp.getLabel().equals(Token.COMMA)){
 					break;
 				}else{
 					garabageQueue.add(temp);
@@ -352,14 +357,14 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
+		if(!temp.getLabel().equals(Token.LEFT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -383,7 +388,7 @@ public class Parser {
 		}
 		
 		temp = lexemes.poll();
-		if(temp.getLabel() != Token.RETURN){
+		if(!temp.getLabel().equals(Token.RETURN)){
 			compactQueues(garabageQueue);
 			return null;
 		}else
@@ -398,19 +403,19 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.SEMICOLON){
+		if(!temp.getLabel().equals(Token.SEMICOLON)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+		if(!temp.getLabel().equals(Token.RIGHT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
-		if(accessModifier == Token.PRIVATE)
+		if(accessModifier.equals(Token.PRIVATE))
 			return new PrivateMethodDeclaration(tempType, tempIdentifier, types, identifiers, varDeclarations, statements, expression);
 		else
 			return new PublicMethodDeclaration(tempType, tempIdentifier, types, identifiers, varDeclarations, statements, expression);
@@ -419,42 +424,40 @@ public class Parser {
 	private Type type(){
 		Bracket bracket = bracket() ;
 		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() == Token.INT){
+		if(temp.getLabel().equals(Token.INT)){
 			lexemes.poll() ;
 			return new Type1(bracket) ;
 		}
-		else if(temp.getLabel() == Token.BOOLEAN){
+		else if(temp.getLabel().equals(Token.BOOLEAN)){
 			lexemes.poll() ;
 			return new Type2(bracket) ;
 		}
-		else if(temp.getLabel() == Token.FLOAT){
+		else if(temp.getLabel().equals(Token.FLOAT)){
 			lexemes.poll() ;
 			return new Type3(bracket) ;
 		}
-		else if(temp.getLabel() == Token.STRING){
+		else if(temp.getLabel().equals(Token.STRING)){
 			lexemes.poll() ;
 			return new Type4(bracket) ;
 		}
-		else if(temp.getLabel() == Token.CHARACTER){
+		else if(temp.getLabel().equals(Token.CHARACTER)){
 			lexemes.poll() ;
 			return new Type5(bracket) ;
 		}
-		System.out.println("Error");
 		return null ;
 		
 	}
-	
+	//todo
 	private Bracket bracket(){
 		Queue<Lexeme> tempLexemes = lexemes ;
 		Lexeme temp1 = tempLexemes.poll();
 		Lexeme temp2 = tempLexemes.peek();
-		if(temp1.getLabel() == Token.LEFT_SQUARE_B && temp2.getLabel() == Token.RIGHT_SQUARE_B ){
+		if(temp1.getLabel().equals(Token.LEFT_SQUARE_B) && temp2.getLabel().equals(Token.RIGHT_SQUARE_B)){
 			lexemes.poll() ;
 			lexemes.poll() ;
 			return new Bracket1();
 		}
-		else if(temp1.getLabel() != Token.LEFT_SQUARE_B || temp2.getLabel() != Token.RIGHT_SQUARE_B ){
-			System.out.println("Error");
+		else if(!temp1.getLabel().equals(Token.LEFT_SQUARE_B) || !temp2.getLabel().equals(Token.RIGHT_SQUARE_B)){
 			return null ;
 		}
 		else
@@ -464,7 +467,7 @@ public class Parser {
 	private AfterNew afterNew(){
 		Lexeme temp = lexemes.peek();
 		Queue<Lexeme> garabageQueue = new LinkedList<>() ; 
-		if(temp.getLabel() == Token.INT){
+		if(temp.getLabel().equals(Token.INT)){
 			Expression expression = expression() ;
 			if(expression != null){
 				temp = lexemes.poll();
@@ -492,12 +495,12 @@ public class Parser {
 		Queue<Lexeme> garabageQueue = new LinkedList<>() ;
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() == Token.LEFT_SQUARE_B){
+		if(temp.getLabel().equals(Token.LEFT_SQUARE_B)){
 			Expression expression = expression() ;
 			if(expression != null){
 				temp = lexemes.poll();
 				garabageQueue.add(temp);
-				if(temp.getLabel() == Token.RIGHT_SQUARE_B){
+				if(temp.getLabel().equals(Token.RIGHT_SQUARE_B)){
 					return new AfterExpression2(expression) ;
 				}
 				else{
@@ -510,7 +513,7 @@ public class Parser {
 				return null;
 			}
 		}
-		else if(temp.getLabel() == Token.DOT){
+		else if(temp.getLabel().equals(Token.DOT)){
 			AfterDot afterDot = afterDot() ;
 			if(afterDot != null){
 				temp = lexemes.poll();
@@ -522,8 +525,9 @@ public class Parser {
 				return null;
 			}
 		}
-		else if(temp.getLabel() == Token.AND || temp.getLabel() == Token.LESSTHAN || temp.getLabel() == Token.PLUS ||
-			temp.getLabel() == Token.MINUS || temp.getLabel() == Token.MULTIPLY){
+		else if(temp.getLabel().equals(Token.AND) || temp.getLabel().equals(Token.LESSTHAN)
+				|| temp.getLabel().equals(Token.PLUS) ||
+			temp.getLabel().equals(Token.MINUS) || temp.getLabel().equals(Token.MULTIPLY)){
 			BinaryOp binaryOp = binaryOp() ;
 			Expression expression = expression() ;
 			if(expression != null){
@@ -545,23 +549,23 @@ public class Parser {
 	
 	private BinaryOp binaryOp(){
 		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() == Token.AND){
+		if(temp.getLabel().equals(Token.AND)){
 			lexemes.poll();
 			return new BinaryOp1() ;
 		}
-		else if(temp.getLabel() == Token.LESSTHAN){
+		else if(temp.getLabel().equals(Token.LESSTHAN)){
 			lexemes.poll();
 			return new BinaryOp2() ;
 		}
-		else if(temp.getLabel() == Token.PLUS){
+		else if(temp.getLabel().equals(Token.PLUS)){
 			lexemes.poll();
 			return new BinaryOp3() ;
 		}
-		else if(temp.getLabel() == Token.MINUS){
+		else if(temp.getLabel().equals(Token.MINUS)){
 			lexemes.poll();
 			return new BinaryOp4() ;
 		}
-		else if(temp.getLabel() == Token.MULTIPLY){
+		else if(temp.getLabel().equals(Token.MULTIPLY)){
 			lexemes.poll();
 			return new BinaryOp5() ;
 		}
@@ -571,7 +575,7 @@ public class Parser {
 	
 	private Identifier identifier() {
 		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() != Token.ID)
+		if(!temp.getLabel().equals(Token.ID))
 			return null;
 		lexemes.poll();
 		return new Identifier(temp.getLabel());
@@ -604,14 +608,14 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.IF){
+		if(!temp.getLabel().equals(Token.IF)){
 			compactQueues(garabageQueue);
 			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -624,7 +628,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -647,14 +651,14 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.IF){
+		if(!temp.getLabel().equals(Token.IF)){
 			compactQueues(garabageQueue);
 			return matched2();
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return matched2();
 		}
@@ -667,7 +671,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return matched2();
 		}
@@ -680,7 +684,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.ELSE){
+		if(!temp.getLabel().equals(Token.ELSE)){
 			compactQueues(garabageQueue);
 			return matched2();
 		}
@@ -726,7 +730,7 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() == Token.ELSE){
+		if(temp.getLabel().equals(Token.ELSE)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -783,7 +787,7 @@ public class Parser {
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LENGTH){
+		if(!temp.getLabel().equals(Token.LENGTH)){
 			compactQueues(garabageQueue);
 			return afterDot2();
 		}
@@ -801,7 +805,7 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -817,7 +821,7 @@ public class Parser {
 			}else
 			{
 				temp = lexemes.poll();
-				if(temp.getLabel() != Token.COMMA){
+				if(!temp.getLabel().equals(Token.COMMA)){
 					break;
 				}else{
 					garabageQueue.add(lexemes.poll());
@@ -833,7 +837,7 @@ public class Parser {
 
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return null;
 		}
@@ -853,7 +857,7 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
+		if(!temp.getLabel().equals(Token.LEFT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return statement2();
 		}
@@ -869,7 +873,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+		if(!temp.getLabel().equals(Token.RIGHT_CURLY_B)){
 			compactQueues(garabageQueue);
 			return statement2();
 		}
@@ -892,14 +896,14 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.WHILE){
+		if(!temp.getLabel().equals(Token.WHILE)){
 			compactQueues(garabageQueue);
 			return statement4();
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return statement4();
 		}
@@ -912,7 +916,7 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return statement4();
 		}
@@ -931,14 +935,14 @@ public class Parser {
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.SYSTEM_OUT_PRINTLN){
+		if(!temp.getLabel().equals(Token.SYSTEM_OUT_PRINTLN)){
 			compactQueues(garabageQueue);
 			return statement5();
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
+		if(!temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return statement5();
 		}
@@ -951,14 +955,14 @@ public class Parser {
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+		if(!temp.getLabel().equals(Token.RIGHT_ROUND_B)){
 			compactQueues(garabageQueue);
 			return statement5();
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
-		if(temp.getLabel() != Token.SEMICOLON){
+		if(!temp.getLabel().equals(Token.SEMICOLON)){
 			compactQueues(garabageQueue);
 			return statement5();
 		}
@@ -982,29 +986,29 @@ public class Parser {
 	
 	private ExpressionTerminals expressionTerminals(){
 		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() == Token.TRUE){
+		if(temp.getLabel().equals(Token.TRUE)){
 			lexemes.poll();
 			return new ExpressionTerminals1() ;
 		}
-		else if(temp.getLabel() == Token.FALSE){
+		else if(temp.getLabel().equals(Token.FALSE)){
 			lexemes.poll();
 			return new ExpressionTerminals2() ;
 		}
-		else if(temp.getLabel() == Token.THIS){
+		else if(temp.getLabel().equals(Token.THIS)){
 			lexemes.poll();
 			return new ExpressionTerminals3() ;
 		}
-		else if(temp.getLabel() == Token.NEW){
+		else if(temp.getLabel().equals(Token.NEW)){
 			lexemes.poll();
 			AfterNew afterNew = afterNew() ;
 			return new ExpressionTerminals4(afterNew) ;
 		}
-		else if(temp.getLabel() == Token.NEW){
+		else if(temp.getLabel().equals(Token.NEW)){
 			lexemes.poll();
 			Expression expression = expression() ;
 			return new ExpressionTerminals5(expression) ;
 		}
-		else if(temp.getLabel() == Token.LEFT_ROUND_B){
+		else if(temp.getLabel().equals(Token.LEFT_ROUND_B)){
 			Queue <Lexeme> garabageQueue = new LinkedList<>();
 			Lexeme tempLexeme = lexemes.poll();
 			garabageQueue.add(tempLexeme) ;
@@ -1012,7 +1016,7 @@ public class Parser {
 			if(expression != null){
 				tempLexeme = lexemes.poll();
 				garabageQueue.add(tempLexeme) ;
-				if(tempLexeme.getLabel() == Token.RIGHT_SQUARE_B){
+				if(tempLexeme.getLabel().equals(Token.RIGHT_SQUARE_B)){
 					return new ExpressionTerminals6(expression) ;
 				}
 				else{
@@ -1041,12 +1045,12 @@ public class Parser {
 		Queue <Lexeme> garabageQueue = new LinkedList<>();
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp) ;
-		if(temp.getLabel() == Token.EQUAL){
+		if(temp.getLabel().equals(Token.EQUAL)){
 			Expression expression = expression();
 			if(expression != null){
 				temp = lexemes.poll();
 				garabageQueue.add(temp) ;
-				if(temp.getLabel() == Token.SEMICOLON)
+				if(temp.getLabel().equals(Token.SEMICOLON))
 					return new AfterIdentifierStmnt1(expression) ;
 				else{
 					compactQueues(garabageQueue);
@@ -1058,20 +1062,20 @@ public class Parser {
 				return null ;
 			}
 		}
-		else if(temp.getLabel() == Token.LEFT_SQUARE_B){
+		else if(temp.getLabel().equals(Token.LEFT_SQUARE_B)){
 			Expression expression1 = expression();
 			if(expression1 != null){
 				temp = lexemes.poll();
 				garabageQueue.add(temp) ;
-				if(temp.getLabel() == Token.RIGHT_SQUARE_B){
+				if(temp.getLabel().equals(Token.RIGHT_SQUARE_B)){
 					temp = lexemes.poll();
 					garabageQueue.add(temp) ;
-					if(temp.getLabel() == Token.EQUAL){
+					if(temp.getLabel().equals(Token.EQUAL)){
 						Expression expression2 = expression();
 						if(expression2 != null){
 							temp = lexemes.poll();
 							garabageQueue.add(temp) ;
-							if(temp.getLabel() == Token.SEMICOLON)
+							if(temp.getLabel().equals(Token.SEMICOLON))
 								return new AfterIdentifierStmnt2(expression1, expression2) ;
 							else{
 								compactQueues(garabageQueue);
