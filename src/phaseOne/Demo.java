@@ -9,8 +9,12 @@ import java.util.regex.Pattern;
 public class Demo {
 	
 	public static void main(String[] args) {	
-		String src = IOFile.readFile();
+		String src = IOFile.readLexicalFile();
 		Queue<Lexeme> result = Tokenizer.tokenize(src) ;
 		IOFile.writeOnFile(result);
+		
+		// Syntax 
+		
+		Queue <Lexeme> lexemes = IOFile.readSyntaxFile() ;
 	}
 }

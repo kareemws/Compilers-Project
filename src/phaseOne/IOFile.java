@@ -9,10 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class IOFile {
-	public static String readFile() {
+	public static String readLexicalFile() {
 		String result = "";
 		try {
 			BufferedReader buffer = new BufferedReader(new FileReader(new File("input.txt")));
@@ -26,6 +27,32 @@ public class IOFile {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public static Queue <Lexeme> readSyntaxFile(){
+		String result = "" ;
+		Queue <Lexeme> lexemes = new LinkedList<>() ;
+		try {
+			BufferedReader buffer = new BufferedReader(new FileReader(new File("output.txt")));
+			String line;
+		    while ((line = buffer.readLine()) != null) {
+		       int indexOfColon = line.indexOf(':') ;
+		       String token="" , value ="";
+		       for(int i=0 ; i < indexOfColon ; i++)
+		    	   token += line.charAt(i);
+		       for(int i=indexOfColon + 1 ; i < line.length() ; i++)
+		    	   value += line.charAt(i);
+		       Lexeme lexeme = new Lexeme();
+		       lexeme.setLabel(token);
+		       lexeme.setValue(value);
+		       lexemes.add(lexeme) ;
+		    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return lexemes ;
 	}
 	
 	public static void writeOnFile(Queue<Lexeme> tokens) {
