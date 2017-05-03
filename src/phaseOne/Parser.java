@@ -476,11 +476,21 @@ public class Parser {
 	}
 	
 	private IfStatement ifStatement1(){
-		return null;
+		Matched matched = matched();
+		if(matched == null){
+			return ifStatement2();
+		}
+		
+		return new IfStatement1(matched);
 	}
 	
 	private IfStatement ifStatement2(){
-		return null;
+		UnMatched unMatched = unMatched();
+		if(unMatched == null){
+			return null;
+		}
+		
+		return new IfStatement2(unMatched);
 	}
 	
 	private UnMatched unMatched(){
