@@ -1,5 +1,6 @@
 package phaseOne;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,7 +23,7 @@ public class Parser {
 	public Goal parse(){
 		return goal();
 	}
-	
+	//checked
 	private Goal goal(){
 		MainClass mainClass = mainClass();
 		ArrayList<ClassDeclaration> classDeclarations = new ArrayList<>();
@@ -32,130 +33,182 @@ public class Parser {
 				break;
 			classDeclarations.add(tempClassDeclaration);
 		}
+		
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.EOL){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
 		ClassDeclaration[] classDeclarationsArray = null;
 		classDeclarations.toArray(classDeclarationsArray);
 		return new Goal(mainClass, classDeclarationsArray);
 	}
 	
+	//checked
 	private MainClass mainClass(){
-		Lexeme temp = lexemes.peek();
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.CLASS){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
+		
+		
 		Identifier firstIdentifier = identifier();
-
-		lexemes.poll();
-		temp = lexemes.peek();
-		if(temp.getLabel() != Token.LEFT_CURLY_B){
-			System.out.println("Error");
+		if(firstIdentifier == null){
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();temp = lexemes.peek();
+		
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_CURLY_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.PUBLIC){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.STATIC){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.VOID){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.MAIN){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_ROUND_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.STRING){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_SQUARE_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.RIGHT_SQUARE_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
+		
 		Identifier secondIdentifier = identifier();
-
-		lexemes.poll();temp = lexemes.peek();
+		if(secondIdentifier == null){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.RIGHT_ROUND_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_CURLY_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
+		
+		
 		Statement statement = statement();
-
-		lexemes.poll();temp = lexemes.peek();
-		if(temp.getLabel() != Token.RIGHT_CURLY_B){
-			System.out.println("Error");
+		if(statement == null){
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
-		lexemes.poll();temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.RIGHT_CURLY_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
 		return new MainClass(firstIdentifier, secondIdentifier, statement);
 	}
 	
+	//checked
 	private ClassDeclaration classDeclaration(){
-		Lexeme temp = lexemes.peek();
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.CLASS){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
+		
+		
 		Identifier firstIdentifier = identifier();
-		Queue<Lexeme> tempLexemes = lexemes;
+		if(firstIdentifier == null){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		
 		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		Identifier secondIdentifier = null;
-		/*if(temp.getLabel() == Token.EXTENDS){
+		if(temp.getLabel() == Token.EXTENDS){
 			secondIdentifier = identifier();
 			if(secondIdentifier == null){
-				System.out.println("Error");
-				lexemes = tempLexemes;
 				return null;
 			}
-		}*/
+		}
 		
-		temp = lexemes.peek();
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_CURLY_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
 		
 		ArrayList<VarDeclaration> varDeclarations = new ArrayList<>();
 		while(true){
@@ -174,6 +227,15 @@ public class Parser {
 			}
 			methodDeclarations.add(tempMethodDeclaration);
 		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_CURLY_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		
 		VarDeclaration[] varDeclarationsArray = null;
 		varDeclarations.toArray(varDeclarationsArray);
 		MethodDeclaration[] methodDeclarationsArray = null;
@@ -186,80 +248,118 @@ public class Parser {
 					methodDeclarationsArray);
 	}
 
+	//checked
 	private VarDeclaration varDeclaration() {
 		Type type = type();
-		Identifier identifier = identifier();
-		Lexeme temp = lexemes.peek();
-		if(temp.getLabel() != Token.SEMICOLON){
-			System.out.println("Error");
+		if(type == null){
 			return null;
 		}
-		lexemes.poll();
+		
+		Identifier identifier = identifier();
+		if(identifier == null){
+			return null;
+		}
+		
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.SEMICOLON){
+			compactQueues(garabageQueue);
+			return null;
+		}
 		return new VarDeclaration(type, identifier);
 	}
 	
+	//checked
 	private MethodDeclaration methodDeclaration(){
 
-		Lexeme temp = lexemes.peek();
+		Queue<Lexeme> garabageQueue = new LinkedList<>();
+		
+		Lexeme temp = lexemes.poll();
+		garabageQueue.add(temp);
 		String accessModifier = null;
 		if(temp.getLabel() == Token.PRIVATE){
 			accessModifier = temp.getLabel();
-			lexemes.poll();
 		}
 		else if(temp.getLabel() == Token.PUBLIC){
 			accessModifier = temp.getLabel();
-			lexemes.poll();
-		}
-		
-		Type type = type();
-		Identifier identifier = identifier();
-		temp = lexemes.peek();
-		if(temp.getLabel() != Token.LEFT_ROUND_B){
-			System.out.println("Error");
+		}else{
+			compactQueues(garabageQueue);
 			return null;
 		}
-		lexemes.poll();
 		
-		temp = lexemes.peek();
-		ArrayList<Type> types = new ArrayList<>();
-		ArrayList<Identifier> identifiers = new ArrayList<>();
-		if(temp.getLabel() != Token.RIGHT_ROUND_B){
-			while(true){
-				Type tempType = type();
-				if(tempType != null)
-					types.add(tempType);
-				else{
-					System.out.println("Error");
-					return null;
-				}
-				Identifier tempIdentifier = identifier();
-				if(tempIdentifier != null)
-					identifiers.add(tempIdentifier);
-				else{
-					System.out.println("Error");
-					return null;
-				}
-				
-				temp = lexemes.peek();
-				if(temp.getLabel() != Token.COMMA){
-					System.out.println("Error");
-					return null;
-				}
-				break; // check
-			}
-			
-			temp = lexemes.peek();
-			if(temp.getLabel() != Token.RIGHT_ROUND_B){
-				System.out.println("Error");
-				return null;
-			}
-		}else{
-			lexemes.poll();
+		
+		Type type = type();
+		if(type == null){
+			compactQueues(garabageQueue);
+			return null;
 		}
 		
-		temp = lexemes.peek();
+		Identifier identifier = identifier();
+		if(identifier == null){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.LEFT_ROUND_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		ArrayList<Type> types = new ArrayList<>();
+		ArrayList<Identifier> identifiers= new ArrayList<>();
+		
+		Type tempType = null;
+		Identifier tempIdentifier = null;
+		for(int i=0; true; i++){
+			if(i == 0){
+				tempType = type();
+				if(tempType == null)
+					break;
+				else{
+					tempIdentifier = identifier();
+					if(tempIdentifier == null)
+						break;
+				}
+				types.add(tempType);
+				identifiers.add(tempIdentifier);
+			}else{
+				temp = lexemes.poll();
+				if(temp.getLabel() != Token.COMMA){
+					break;
+				}else{
+					garabageQueue.add(temp);
+					tempType = type();
+					if(tempType == null){
+						compactQueues(garabageQueue);
+						return null;
+					}
+					else{
+						tempIdentifier = identifier();
+						if(tempIdentifier == null){
+							compactQueues(garabageQueue);
+							return null;
+						}
+					}
+					types.add(tempType);
+					identifiers.add(tempIdentifier);
+				}
+			}
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
+		if(temp.getLabel() != Token.RIGHT_ROUND_B){
+			compactQueues(garabageQueue);
+			return null;
+		}
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_CURLY_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}
 		
@@ -281,33 +381,38 @@ public class Parser {
 			statements.add(statement);
 		}
 		
-		temp = lexemes.peek();
+		temp = lexemes.poll();
 		if(temp.getLabel() != Token.RETURN){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
 		}else
 			lexemes.poll();
 		
 		Expression expression = expression();
+		if(expression == null){
+			compactQueues(garabageQueue);
+			return null;
+		}
 		
-		temp = lexemes.peek();
+		
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.SEMICOLON){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
-		}else
-			lexemes.poll();
+		}
 		
-		temp = lexemes.peek();
+		temp = lexemes.poll();
+		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.RIGHT_CURLY_B){
-			System.out.println("Error");
+			compactQueues(garabageQueue);
 			return null;
-		}else
-			lexemes.poll();
+		}
 		
 		if(accessModifier == Token.PRIVATE)
-			return new PrivateMethodDeclaration(type, identifier, types, identifiers, varDeclarations, statements, expression);
+			return new PrivateMethodDeclaration(tempType, tempIdentifier, types, identifiers, varDeclarations, statements, expression);
 		else
-			return new PublicMethodDeclaration(type, identifier, types, identifiers, varDeclarations, statements, expression);
+			return new PublicMethodDeclaration(tempType, tempIdentifier, types, identifiers, varDeclarations, statements, expression);
 	}
 	
 	private Type type(){
