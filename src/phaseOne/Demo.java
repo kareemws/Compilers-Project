@@ -21,7 +21,12 @@ public class Demo {
 		
 		Queue <Lexeme> lexemes = IOFile.readSyntaxFile() ;
 		Parser parser = new Parser(lexemes) ;
-		Goal goal = parser.parse();
-		System.out.println(goal.getValue());
+		try {
+			Goal goal = parser.parse();
+			System.out.println(goal.getValue());
+		} catch (Exception e) {
+			System.out.println("Error");
+		}
+
 	}
 }

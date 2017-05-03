@@ -10,6 +10,7 @@ import phaseTwo.*;
 public class Parser {
 
 	private Queue<Lexeme> lexemes;
+	public static String error ;
 	
 	public Parser(Queue<Lexeme> lexemes){
 		this.lexemes = lexemes;
