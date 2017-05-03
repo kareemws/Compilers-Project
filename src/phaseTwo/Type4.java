@@ -1,10 +1,10 @@
 package phaseTwo;
 
-public class StringType implements Type {
+public class Type4 implements Type {
 
 	private Bracket bracket;
 	
-	public StringType(Bracket bracket){
+	public Type4(Bracket bracket){
 		this.bracket = bracket;
 	}
 	

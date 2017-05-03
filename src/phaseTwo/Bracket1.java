@@ -1,10 +1,10 @@
 package phaseTwo;
 
-public class Epsilon implements Bracket{
+public class Bracket1 implements Bracket{
 
 	@Override
 	public String getValue() {
-		return "";
+		return "[]";
 	}
 	
 }

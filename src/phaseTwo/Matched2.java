@@ -1,8 +1,8 @@
 package phaseTwo;
 
-public class MatchedStatement implements Matched{
+public class Matched2 implements Matched{
 	Statement statement;
-	public MatchedStatement(Statement statement) {
+	public Matched2(Statement statement) {
 		this.statement = statement;
 	}
 	@Override

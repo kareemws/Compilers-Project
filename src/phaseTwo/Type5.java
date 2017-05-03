@@ -1,15 +1,15 @@
 package phaseTwo;
 
-public class BooleanType implements Type {
+public class Type5 implements Type {
 
 	private Bracket bracket;
 	
-	public BooleanType(Bracket bracket){
+	public Type5(Bracket bracket){
 		this.bracket = bracket;
 	}
 	@Override
 	public String getValue() {
-		return "boolean" + bracket.getValue();
+		return "char" + bracket.getValue();
 	}
 
 }

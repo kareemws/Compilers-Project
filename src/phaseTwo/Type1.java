@@ -1,9 +1,9 @@
 package phaseTwo;
 
-public class IntType implements Type {
+public class Type1 implements Type {
 
 	private Bracket bracket;
-	public IntType(Bracket bracket){
+	public Type1(Bracket bracket){
 		this.bracket = bracket;
 	}
 	

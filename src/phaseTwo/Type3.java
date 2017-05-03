@@ -1,10 +1,10 @@
 package phaseTwo;
 
-public class FloatType implements Type {
+public class Type3 implements Type {
 
 	private Bracket bracket;
 	
-	public FloatType(Bracket bracket){
+	public Type3(Bracket bracket){
 		this.bracket = bracket;
 	}
 	

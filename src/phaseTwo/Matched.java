@@ -1,6 +1,6 @@
 package phaseTwo;
 
-public interface Matched extends IfStatement{
+public interface Matched{
 
 	public String getValue();
 }

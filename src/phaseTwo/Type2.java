@@ -1,15 +1,15 @@
 package phaseTwo;
 
-public class CharType implements Type {
+public class Type2 implements Type {
 
 	private Bracket bracket;
 	
-	public CharType(Bracket bracket){
+	public Type2(Bracket bracket){
 		this.bracket = bracket;
 	}
 	@Override
 	public String getValue() {
-		return "char" + bracket.getValue();
+		return "boolean" + bracket.getValue();
 	}
 
 }

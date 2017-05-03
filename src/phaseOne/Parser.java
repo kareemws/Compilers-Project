@@ -201,7 +201,7 @@ public class Parser {
 	private MethodDeclaration methodDeclaration(){
 
 		Lexeme temp = lexemes.peek();
-		String accessModifier;
+		String accessModifier = null;
 		if(temp.getLabel() == Token.PRIVATE){
 			accessModifier = temp.getLabel();
 			lexemes.poll();
@@ -245,6 +245,7 @@ public class Parser {
 					System.out.println("Error");
 					return null;
 				}
+				break; // check
 			}
 			
 			temp = lexemes.peek();
@@ -314,23 +315,23 @@ public class Parser {
 		Lexeme temp = lexemes.peek();
 		if(temp.getLabel() == Token.INT){
 			lexemes.poll() ;
-			return new IntType(bracket) ;
+			return new Type1(bracket) ;
 		}
 		else if(temp.getLabel() == Token.BOOLEAN){
 			lexemes.poll() ;
-			return new BooleanType(bracket) ;
+			return new Type2(bracket) ;
 		}
 		else if(temp.getLabel() == Token.FLOAT){
 			lexemes.poll() ;
-			return new FloatType(bracket) ;
+			return new Type3(bracket) ;
 		}
 		else if(temp.getLabel() == Token.STRING){
 			lexemes.poll() ;
-			return new StringType(bracket) ;
+			return new Type4(bracket) ;
 		}
 		else if(temp.getLabel() == Token.CHARACTER){
 			lexemes.poll() ;
-			return new CharType(bracket) ;
+			return new Type5(bracket) ;
 		}
 		System.out.println("Error");
 		return null ;
@@ -344,14 +345,14 @@ public class Parser {
 		if(temp1.getLabel() == Token.LEFT_SQUARE_B && temp2.getLabel() == Token.RIGHT_SQUARE_B ){
 			lexemes.poll() ;
 			lexemes.poll() ;
-			return new ExistingBracket();
+			return new Bracket1();
 		}
 		else if(temp1.getLabel() != Token.LEFT_SQUARE_B || temp2.getLabel() != Token.RIGHT_SQUARE_B ){
 			System.out.println("Error");
 			return null ;
 		}
 		else
-			return new Epsilon();
+			return new Bracket2();
 	}
 		
 	private AfterNew afterNew(){
@@ -474,7 +475,7 @@ public class Parser {
 		return unMatched();
 	}
 	
-	private UnMatched unMatched(){
+	private IfStatement unMatched(){
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		
 		Lexeme temp = lexemes.poll();
@@ -513,7 +514,7 @@ public class Parser {
 		return new UnMatched(expression, unMatchedDash);
 	}
 	
-	private Matched matched(){
+	private IfStatement matched(){
 		return matched1();
 	}
 	
@@ -547,7 +548,7 @@ public class Parser {
 			return matched2();
 		}
 		
-		Matched matched1 = matched();
+		Matched matched1 = matched1();
 		if(matched1 == null){
 			compactQueues(garabageQueue);
 			return matched2();
@@ -560,7 +561,7 @@ public class Parser {
 			return matched2();
 		}
 		
-		Matched matched2 = matched();
+		Matched matched2 = matched1();
 		if(matched2 == null){
 			compactQueues(garabageQueue);
 			return matched2();
@@ -575,7 +576,7 @@ public class Parser {
 			return null;
 		}
 		
-		return new MatchedStatement(statement);
+		return new Matched2(statement);
 	}
 
 	private UnMatchedDash unMatchedDash(){
@@ -594,7 +595,7 @@ public class Parser {
 	private UnMatchedDash unMatchedDash2(){
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		
-		Matched matched = matched();
+		Matched matched = matched1();
 		if(matched == null){
 			return null;
 		}
@@ -606,7 +607,7 @@ public class Parser {
 			return null;
 		}
 		
-		UnMatched unMatched = unMatched();
+		UnMatched unMatched = null; // check
 		if(unMatched == null){
 			compactQueues(garabageQueue);
 			return null;
@@ -720,6 +721,7 @@ public class Parser {
 
 	private Statement statement(){
 		
+		return null;
 	}
 	
 	private ExpressionTerminals expressionTerminals(){
@@ -846,32 +848,4 @@ public class Parser {
 		}
 		
 	}
-	
-	//	ArrayList <Statement> statements = new ArrayList<>() ;
-//	
-//	private Statement statement(){
-//		return statement1() ;
-//	}
-//	
-//	private Statement statement1(){
-//		Lexeme tempLexeme = lexemes.poll();
-//
-//		if(tempLexeme.getLabel() == Token.LEFT_CURLY_B){
-//			statements.add(statement());
-//			tempLexeme = lexemes.poll() ;
-//			if(tempLexeme.getLabel() != Token.RIGHT_CURLY_B){
-//				System.out.println("Error, Missed \"}\" ");
-//				return null ;
-//			}
-//		}
-//		else{
-//			//return statement4() ;
-//		}
-//	}
-//	
-//	private Statement statement4(){
-//		Identifier identifier = identifier();
-//		AfterIdentifierStmnt afterIdentifierStmnt = afterIdentifierStmnt();
-//		return;
-//	}
 }

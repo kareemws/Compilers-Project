@@ -1,6 +1,6 @@
 package phaseTwo;
 
-public class UnMatched implements IfStatement {
+public class UnMatched {
 
 	private Expression expression;
 	private UnMatchedDash unMatchedDash;
@@ -10,7 +10,6 @@ public class UnMatched implements IfStatement {
 		this.unMatchedDash = unMatchedDash;
 	}
 	
-	@Override
 	public String getValue() {
 		
 		return expression.getValue() + unMatchedDash.getValue();
