@@ -472,49 +472,57 @@ public class Parser {
 	}
 		
 	private IfStatement ifStatement(){
-		return unMatched();
+		return ifStatement1();
 	}
 	
-	private IfStatement unMatched(){
+	private IfStatement ifStatement1(){
+		return null;
+	}
+	
+	private IfStatement ifStatement2(){
+		return null;
+	}
+	
+	private UnMatched unMatched(){
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		
 		Lexeme temp = lexemes.poll();
 		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.IF){
 			compactQueues(garabageQueue);
-			return matched();
+			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.LEFT_ROUND_B){
 			compactQueues(garabageQueue);
-			return matched();
+			return null;
 		}
 		
 		Expression expression = expression();
 		if(expression == null){
 			compactQueues(garabageQueue);
-			return matched();
+			return null;
 		}
 		
 		temp = lexemes.poll();
 		garabageQueue.add(temp);
 		if(temp.getLabel() != Token.RIGHT_ROUND_B){
 			compactQueues(garabageQueue);
-			return matched();
+			return null;
 		}
 		
 		UnMatchedDash unMatchedDash = unMatchedDash();
 		if(unMatchedDash == null){
 			compactQueues(garabageQueue);
-			return matched();
+			return null;
 		}
 		
 		return new UnMatched(expression, unMatchedDash);
 	}
 	
-	private IfStatement matched(){
+	private Matched matched(){
 		return matched1();
 	}
 	
@@ -548,7 +556,7 @@ public class Parser {
 			return matched2();
 		}
 		
-		Matched matched1 = matched1();
+		Matched matched1 = matched();
 		if(matched1 == null){
 			compactQueues(garabageQueue);
 			return matched2();
@@ -561,7 +569,7 @@ public class Parser {
 			return matched2();
 		}
 		
-		Matched matched2 = matched1();
+		Matched matched2 = matched();
 		if(matched2 == null){
 			compactQueues(garabageQueue);
 			return matched2();
@@ -595,7 +603,7 @@ public class Parser {
 	private UnMatchedDash unMatchedDash2(){
 		Queue<Lexeme> garabageQueue = new LinkedList<>();
 		
-		Matched matched = matched1();
+		Matched matched = matched();
 		if(matched == null){
 			return null;
 		}
@@ -607,7 +615,7 @@ public class Parser {
 			return null;
 		}
 		
-		UnMatched unMatched = null; // check
+		UnMatched unMatched = unMatched();
 		if(unMatched == null){
 			compactQueues(garabageQueue);
 			return null;
